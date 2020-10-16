@@ -1,8 +1,8 @@
-# ???
-This repository contains a Python implementation of the uncertainty magnification factors (UMFs) presented in ??? for the drop impact splashing model proposed by Riboux & Gordillo (2014; 2015).
+# Uncertainty magnification factors for RG splashing model.
+This repository contains a Python implementation of the uncertainty magnification factors (UMFs) presented in ??? for the drop impact splashing model proposed by Riboux & Gordillo (2014; 2015). Please refer to the main text for more details.
 
 ## Requirements / Dependencies
-* Python > 3
+* Python 3
 * numpy
 * scipy
 * sympy
