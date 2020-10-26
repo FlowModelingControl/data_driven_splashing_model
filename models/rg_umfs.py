@@ -1,5 +1,18 @@
 """
+# Uncertainty magnification factors for RG splashing model
 
+Equations for uncertainty magnification factors (UMFs) derived for the RG splashing
+model (Riboux & Gordillo 2014; 2015) in Pierzyna et al. (2020).
+
+## References
+* Pierzyna, Maximilian, David A. Burzynski, Stephan E. Bansmer, and Richard Semaan.
+  "Data-driven splashing threshold model for drop impact on dry smooth surfaces."
+  Journal of Fluid Mechanics (2020, submitted)
+* Riboux, Guillaume, and José Manuel Gordillo. "Experiments of drops impacting
+  a smooth solid surface: a model of the critical impact speed for drop splashing."
+  Physical review letters 113.2 (2014): 024507.
+* Riboux, Guillaume, and José Manuel Gordillo. "The diameters and velocities of
+  the droplets ejected after splashing." Journal of Fluid Mechanics 772 (2015): 630-648.
 """
 import sympy as sp
 import numpy as np
@@ -76,7 +89,7 @@ umf_funcs = [
 
 def calc_umfs(impact_matrix):
     """
-    Calculate UMF factors for RG splashing model (???)
+    Calculate UMF factors for RG splashing model (Pierzyna et al. 2020)
     either for single impact vector or for matrix of impact vectors.
 
     :impact_matrix: numpy.ndarry of shape (8, ) or (n, 8) with drop impact
@@ -99,34 +112,3 @@ def calc_umfs(impact_matrix):
         umf(*impact_matrix.T)
         for umf in umf_funcs
     ]).T
-
-
-if __name__ == '__main__':
-    """
-    Calculate UMFs based on equations from ???.
-    Provide drop impact condtions as vector or as matrix containing
-    - V0:       Impact velocity in m/s
-    - R0:       Drop radius in m
-    - rho_l:    Liquid density in kg/m^3
-    - mu_l:     Liquid viscosity in Pa s
-    - sigma_l:  Liquid surface tension in N/m
-    - rho_g:    Gas density in kg/m^3
-    - mu_g:     Gas viscosity in Pa s
-    - lambda_g: Gas mean free path in m
-    """
-    x = np.array([10, 2e-3, 1000, 1e-3, 72e-3, 1.225, 1e-5, 72e-9])
-    x_matrix = np.array([
-        x,
-        2*x,
-        3*x
-    ])
-
-    print(calc_umfs(x_matrix))
-    print(calc_umfs(x))
-    #t_e = calc_t_e(x_matrix)
-    #print(umf_funcs[1](*np.c_[x_matrix, t_e].T))
-
-# References
-# - Riboux, Guillaume, and José Manuel Gordillo. "Experiments of drops impacting a smooth solid surface: a model of the critical impact speed for drop splashing." Physical review letters 113.2 (2014): 024507.
-# - Riboux, Guillaume, and José Manuel Gordillo. "The diameters and velocities of the droplets ejected after splashing." Journal of Fluid Mechanics 772 (2015): 630-648.
-# - ???

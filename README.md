@@ -1,5 +1,10 @@
-# Uncertainty magnification factors for RG splashing model.
-This repository contains a Python implementation of the uncertainty magnification factors (UMFs) presented in ??? for the drop impact splashing model proposed by Riboux & Gordillo (2014; 2015). Please refer to the main text for more details.
+# Data-driven splashing threshold model for drop impact on dry smooth surfaces
+This repository provides the Python implementation for the uncertainty quantification method and the data-driven splashing threshold (DST) model presented by Pierzyna et al. (2020). 
+
+* The uncertainty quantifier (see `example_uq.py`) propagates user-definable measurement uncertainties through the equations of the Riboux & Gordillo (2014; 2015) splashing model. It yields the combined uncertainty of the RG splashing parameter `beta` (relative or absolute) for a given set of measured drop impacts.
+* The DST model (see `example_dst.py`) can be used to calculate the splashing threshold for drop impacts on a dry smooth surface and to predict the respective splashing outcome (deposition or splashing). The threshold was derived using sophisticated machine learning techniques for a wide range of impact conditions as detailed in Pierzyna et al. (2020) and is based on the RG splashing model (Riboux & Gordillo 2014; 2015).
+
+Please refer to our article for more details (Pierzyna et al. 2020).
 
 ## Requirements / Dependencies
 * Python 3
@@ -13,58 +18,20 @@ pip install -r requirements.txt
 ```
 
 ## Usage
-For an executable version of this example see `example.py`.
+Please refer to `example_dst.py` and `example_uq.py` for detailed instructions on how to use the DST model and the uncertainty quantification method.
 
-Import the UMF calculator in the script where you would like to use it and create an instance of it:
-```
-import numpy as np
-from RG2015_UMFs import RG2015_UMFs
-
-umfs = RG2015_UMFs()
-```
-
-Create a numpy array (vector) which contains the eight impact variables for a water drop impacting a solid smooth surface in air, which are
-* impact velocity in m/s,
-* drop radius in m,
-* liquid density in kg/m^3,
-* liquid viscosity in Pa s,
-* liquid surface tension in N/m,
-* gas density in kg/m^3,
-* gas viscosity in Pa s,
-* and gas mean free path in m.
-
-```
-x1 = np.array([
-    10,
-    1.5e-3,
-    1000,
-    1e-3,
-    72e-3,
-    1.225,
-    1.82e-5,
-    68e-9
-])
-```
-
-Calculate the UMFs with
-```
-umfs.calc_umfs(x1)
-```
-which yields the following output:
-```
-{
-    'U0': 0.608923031058429, 
-    'R0': 0.3001688763896971, 
-    'rho_l': -0.14579179905533132, 
-    'mu_l': 0.080893353004417, 
-    'sigma_l': -0.43510155394908584, 
-    'rho_g': 0.31961349846127896, 
-    'mu_g': 0.18038650153872104, 
-    'lambda_g': -0.12634739928035382
-}
-```
+In general, all functions expect a vector (`numpy.ndarray` of shape `(8, )`) or a list of vectors (`numpy.ndarray` of shape `(n, 8`)) which describe the full state of the drop impact on a dry smooth surface. The expected variables are 
+* impact velocity `V0` in m/s,
+* drop **radius** `R0` in m,
+* liquid density `rho_l` in kg/m^3,
+* liquid viscosity `mu_l` in Pa s,
+* liquid surface tension `sigma_l` in N/m,
+* gas density `rho_g` in kg/m^3,
+* gas viscosity `mu_g` in Pa s,
+* and gas mean free path `lambda_g` in m.
 
 ## References
+* Pierzyna, Maximilian, David A. Burzynski, Stephan E. Bansmer, and Richard Semaan. "Data-driven splashing threshold model for drop impact on dry smooth surfaces." Journal of Fluid Mechanics (2020, submitted)
 * Riboux, Guillaume, and José Manuel Gordillo. "Experiments of drops impacting a smooth solid surface: a model of the critical impact speed for drop splashing." Physical review letters 113.2 (2014): 024507.
 * Riboux, Guillaume, and José Manuel Gordillo. "The diameters and velocities of the droplets ejected after splashing." Journal of Fluid Mechanics 772 (2015): 630-648.
 * ???

@@ -1,9 +1,19 @@
 """
-Data-driven splashing threshold model
------
+# Data-driven splashing threshold model
+
 Implementation of the data-driven splashing threshold (DST) model
 presented in Pierzyna et al. (2020) based on the splashing model proposed by
 Riboux and Gordillo (2014; 2015).
+
+## References
+* Pierzyna, Maximilian, David A. Burzynski, Stephan E. Bansmer, and Richard Semaan.
+  "Data-driven splashing threshold model for drop impact on dry smooth surfaces."
+  Journal of Fluid Mechanics (2020, submitted)
+* Riboux, Guillaume, and José Manuel Gordillo. "Experiments of drops impacting
+  a smooth solid surface: a model of the critical impact speed for drop splashing."
+  Physical review letters 113.2 (2014): 024507.
+* Riboux, Guillaume, and José Manuel Gordillo. "The diameters and velocities of
+  the droplets ejected after splashing." Journal of Fluid Mechanics 772 (2015): 630-648.
 """
 import numpy as np
 import sympy as sp

@@ -1,3 +1,24 @@
+"""
+# Uncertainty quantifier for Riboux & Gordillo (2014; 2015) splashing model
+
+This example shows how to use the Python implementation of the
+uncertainty quantification method for the RG splashing model presented by
+Pierzyna et al. (2020).
+
+The propagator can be used to quantify the influence of uncertainties in the measured
+drop impact parameters (impact velocity, impact diameter, liquid properties, and gas properties)
+on the calculated splashing factor `beta` according to the RG theory.
+
+## References
+* Pierzyna, Maximilian, David A. Burzynski, Stephan E. Bansmer, and Richard Semaan.
+  "Data-driven splashing threshold model for drop impact on dry smooth surfaces."
+  Journal of Fluid Mechanics (2020, submitted)
+* Riboux, Guillaume, and José Manuel Gordillo. "Experiments of drops impacting
+  a smooth solid surface: a model of the critical impact speed for drop splashing."
+  Physical review letters 113.2 (2014): 024507.
+* Riboux, Guillaume, and José Manuel Gordillo. "The diameters and velocities of
+  the droplets ejected after splashing." Journal of Fluid Mechanics 772 (2015): 630-648.
+"""
 import numpy as np
 from tools.taylor_propagator import TaylorPropagator
 from models.rg2014 import calc_beta

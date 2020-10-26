@@ -15,7 +15,7 @@ class TaylorPropagator:
         "V0", "R0", "rho_l", "mu_l", "sigma_l", "rho_g", "mu_g", "lambda_g"
     )
 
-    # Assume a relative uncertainty of 1% for all liquid parameters (???).
+    # Assume a relative uncertainty of 1% for all gas and liquid parameters.
     DEFAULT_UNCERTAINTIES = {
         "rho_l": lambda val: val * 0.01,
         "mu_l": lambda val: val * 0.01,
@@ -60,6 +60,8 @@ class TaylorPropagator:
         Propagate uncertainties according to Eq. (2.2) shown in Pierzyna et al. (2020)
         to obtain combined uncertainty of splashing factor beta for provided state X.
 
+        :X:         Drop impact measurements as numpy.ndarray of shape (8, ) or (n, 8)
+                    containing (V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g)
         :relative:  Optional. If true, resulting uncertainty will be relative to `beta`.
         """
         # Validate input and check if matrix or vector

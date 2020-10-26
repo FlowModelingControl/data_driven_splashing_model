@@ -8,7 +8,7 @@ based on the splashing model proposed by Riboux & Gordillo (2014; 2015).
 ## References
 * Pierzyna, Maximilian, David A. Burzynski, Stephan E. Bansmer, and Richard Semaan.
   "Data-driven splashing threshold model for drop impact on dry smooth surfaces."
-  Journal of Fluid Mechanics (submitted)
+  Journal of Fluid Mechanics (2020, submitted)
 * Riboux, Guillaume, and José Manuel Gordillo. "Experiments of drops impacting
   a smooth solid surface: a model of the critical impact speed for drop splashing."
   Physical review letters 113.2 (2014): 024507.

@@ -1,6 +1,14 @@
-#!/usr/bin/env python3
 """
+# Riboux & Gordillo splashing model
+
 Equations for RG splashing model (Riboux & Gordillo 2014; Riboux & Gordillo 2015)
+
+## References
+* Riboux, Guillaume, and José Manuel Gordillo. "Experiments of drops impacting
+  a smooth solid surface: a model of the critical impact speed for drop splashing."
+  Physical review letters 113.2 (2014): 024507.
+* Riboux, Guillaume, and José Manuel Gordillo. "The diameters and velocities of
+  the droplets ejected after splashing." Journal of Fluid Mechanics 772 (2015): 630-648.
 """
 import sympy as sp
 import numpy as np
