@@ -25,7 +25,7 @@ class TaylorPropagator:
         "lambda_g": lambda val: val * 0.01,
     }
 
-    def __init__(self, uncertainty_dict=None, update_defaults=False):
+    def __init__(self, uncertainty_dict, update_defaults=False):
         """
         Initialize propagator with combined measurment uncertainties of experiment.
 
@@ -35,20 +35,16 @@ class TaylorPropagator:
                             will be kept and updated with provided `uncertainty_dict`.
                             False: Only use provided `uncertainty_dict`.
         """
-        if uncertainty_dict is None:
-            # Use default uncertainties for propagation
+        if update_defaults:
+            # Keep default uncertainties but update them provided uncertainty dict
             self.uncertainty_dict = self.DEFAULT_UNCERTAINTIES
+            self.uncertainty_dict.update(uncertainty_dict)
         else:
-            if update_defaults:
-                # Keep default uncertainties but update them provided uncertainty dict
-                self.uncertainty_dict = self.DEFAULT_UNCERTAINTIES
-                self.uncertainty_dict.update(uncertainty_dict)
-            else:
-                # Only use provided uncertainty dict (default)
-                self.uncertainty_dict = uncertainty_dict
+            # Only use provided uncertainty dict (default)
+            self.uncertainty_dict = uncertainty_dict
 
         # Check that all variables for which uncertainties are provided are valid.
-        for var in uncertainty_dict:
+        for var in self.uncertainty_dict:
             if var not in self.VALID_VARIABLES:
                 raise ValueError(
                     f"Variable '{var}' is invalid. Please provide uncertainty "

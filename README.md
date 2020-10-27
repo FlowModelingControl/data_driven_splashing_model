@@ -30,6 +30,14 @@ In general, all functions expect a vector (`numpy.ndarray` of shape `(8, )`) or 
 * gas viscosity `mu_g` in Pa s,
 * and gas mean free path `lambda_g` in m.
 
+## Testing
+Tests are provided in the `tests` folder to ensure that all mathematical models are implemented correctly. Reference values were caluculated with great care in Mathematica based on equations provided by Pierzyna et al. (2020) and Riboux & Gordillo (2014; 2015).
+
+Following command runs the tests in your terminal and should exit without erros:
+```
+python -m unittests
+```
+
 ## References
 * Pierzyna, Maximilian, David A. Burzynski, Stephan E. Bansmer, and Richard Semaan. "Data-driven splashing threshold model for drop impact on dry smooth surfaces." Journal of Fluid Mechanics (2020, submitted)
 * Riboux, Guillaume, and José Manuel Gordillo. "Experiments of drops impacting a smooth solid surface: a model of the critical impact speed for drop splashing." Physical review letters 113.2 (2014): 024507.
