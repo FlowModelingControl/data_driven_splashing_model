@@ -1,10 +1,11 @@
 import numpy as np
 
+
 def validate_input(X):
     """
     Helper to validate that input X is either
-    - numpy array of shape (8, ) -> vector
-    - numpy array of shape (n, 8) -> matrix, i.e. list of vectors
+    - numpy array of shape (9, ) -> vector
+    - numpy array of shape (n, 9) -> matrix, i.e. list of vectors
 
     :X:         input to be validated
 
@@ -16,13 +17,13 @@ def validate_input(X):
     if isinstance(X, np.ndarray):
         if len(X.shape) == 1:
             # Vector
-            if X.shape[0] == 8:
-                return (True, False)
+            if X.shape[0] == 9:
+                return True, False
         elif len(X.shape) == 2:
-            if X.shape[1] == 8:
-                return (True, True)
+            if X.shape[1] == 9:
+                return True, True
 
     raise ValueError(
         "Input has incorrect shape. Please provide numpy ndarray of shape "
-        "(8, ) or (n,  8)."
+        "(9, ) or (n,  9)."
     )

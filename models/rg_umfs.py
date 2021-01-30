@@ -17,73 +17,87 @@ model (Riboux & Gordillo 2014; 2015) in Pierzyna et al. (2020).
 import sympy as sp
 import numpy as np
 
-from models.rg2014 import beta_expr, calc_t_e
+from models.rg2014 import calc_t_e, ll, ls
 from tools.utils import validate_input
 
 # create symbols
-V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g, t_e, beta, f1, f2, f3 = sp.symbols("V0 R0 rho_l mu_l sigma_l rho_g mu_g lambda_g t_e beta f1 f2 f3")
-state = [V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g]
+V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g, alpha, t_e, beta = sp.symbols("V0 R0 rho_l mu_l sigma_l rho_g mu_g lambda_g alpha t_e beta")
+state = [V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g, alpha]
 
 #####
-# Implement uncertainty magnification factors for RG splashing model (???)
+# Implement uncertainty magnification factors for RG splashing model (TODO add reference to our manuscript)
 #####
-# Time derivative functions
-# update constants
-f1_expr = sp.sqrt(3)/7.2 * mu_l + R0 * t_e**2 * V0 * rho_l
-f2_expr = sp.sqrt(3)/3.6 * t_e * V0 * mu_l
-f3_expr = 2/3.6 * t_e**(3/2) * sigma_l
+# Constants according to Riboux and Gordillo (2014, 2015)
+c1 = sp.sqrt(3)/2
+c2 = 1.2**2
+K_u = 0.3
 
-# Common functions
-a1 = f1 * t_e * V0 * beta**2 * sigma_l * (R0 * t_e**(3/2) + 17.4125 * lambda_g)
-a2 = 3/8 * sp.sqrt(3) * R0 * t_e * V0 * mu_g
-a3 = R0 * sp.sqrt(t_e) * V0**2 * rho_g * (0.0620245 * R0 * t_e**(3/2) + 1.08 * lambda_g)
-a4 = -1/4 * beta**2 * sigma_l * (R0 * t_e**(3/2) + 17.4125 * lambda_g)
+# Define auxiliary functions
+f1 = (19.2 * sp.pi * lambda_g) / (sp.sqrt(12) * R0 * t_e**(3/2))
+f2 = c1 * mu_l + 3 * c2**2 * R0 * t_e**(3/2) * V0 * rho_l
+f3 = (c1 * V0 * mu_l + sp.sqrt(t_e) * sigma_l) / f2
+f4 = c1 * V0 * mu_l + 2 * sp.sqrt(t_e) * sigma_l
+f5 = sp.ln(f1) - sp.ln(1 + f1)
 
+# Define UMF functions
 umf_V0 = (
-    a2 * (-f2 - 2*f3) +
-    a3 * (f1 * t_e * V0 - f2 - 2*f3) -
-    a4 * (2*f1 * t_e * V0 + f2 + 2*f3)
-) / a1
-
-
-umf_R0 = (
-    a2 * (2/3 * f1 * t_e * V0 - f2 - f3) +
-    a3 * (f1 * t_e * V0 - f2 - f3) -
-    a4 * (f2 + f3)
-) / a1
-
-umf_rho_l = - (f2 + f3) / a1 * (a2 + a3 + a4)
-
-umf_mu_l = f2 / a1 * (
-    a2 + a3 + a4
+    3 * f4 * ll + (1 + f1) * (
+        f4 * (ll - ls) + f2 * (ll + 2 * ls) * V0
+    ) * f5
+) / (
+    2 * (1 + f1) * (ll + ls) * f5 * f2 * V0
 )
 
-umf_sigma_l = (
-    a2 * f3 +
-    a3 * f3 +
-    a4 * (2 * t_e * V0 * f1 + f3)
-) / a1
+umf_R0 = - (
+    ll * (V0 - 3 * f3) - (
+        f3 * (ll + f1 * ll - ls - f1 * ls) + (1 + f1) * ls * V0
+    ) * f5
+) / (
+    2 * (1 + f1) * (ll + ls) * f5 * V0
+)
 
-umf_rho_g = (0.0620245 * R0 * sp.sqrt(t_e) * V0**2 * rho_g) / (beta**2 * sigma_l)
+umf_rho_l = (
+    f3 * (
+        3 * ll + (ll + f1 * ll - ls - f1 * ls) * f5
+    )
+) / (
+    2 * (1 + f1) * (ll + ls) * f5 * V0
+)
 
-umf_mu_g = 0.5 - umf_rho_g
+umf_mu_l = c1 / (2 * f2 * (ll + ls)) * (
+    ls - ll * (
+        1 + 3 / ((1 + f1) * f5)
+    )
+) * mu_l
 
-umf_lambda_g = -(sp.sqrt(3) * R0 * t_e * V0 * mu_g) / (4 * beta**2 * sigma_l * (R0 * t_e**(3/2) + 17.4125 * lambda_g))
+umf_sigma_l = - (
+    (ll + ls) * (1 + f1) * f2 * f5 * V0 + sp.sqrt(t_e) * sigma_l * (
+        3 * ll + (ll + f1 * ll - ls - f1 * ls) * f5
+    )
+) / (
+    2 * (1 + f1) * (ll + ls) * f5 * f2 * V0
+)
+
+umf_rho_g = ls / (2 * (ll + ls))
+
+umf_mu_g = ll / (2 * (ll + ls))
+
+umf_lambda_g = ll / (2 * (1 + f1) * (ll + ls) * f5)
+
+# numpy does not define sec and csc -> use alternative representation: sec(x) csc(x) = 1/(sin(x) cos(x))
+umf_alpha = - (
+    ll * alpha / (sp.sin(alpha) * sp.cos(alpha))
+) / (ll + ls)
 
 # Substitute auxiliary functions f1, f2, f3, and RG's beta equation into UMF equations.
 # Convert all UMF equations into array of python usabale functions.
 umf_funcs = [
     sp.lambdify(
         state + [t_e],
-        umf.subs([
-            (f1, f1_expr),
-            (f2, f2_expr),
-            (f3, f3_expr),
-            (beta, beta_expr),
-        ]),
+        umf,
         "numpy"
     ) for umf in
-    [umf_V0, umf_R0, umf_rho_l, umf_mu_l, umf_sigma_l, umf_rho_g, umf_mu_g, umf_lambda_g ]
+    [umf_V0, umf_R0, umf_rho_l, umf_mu_l, umf_sigma_l, umf_rho_g, umf_mu_g, umf_lambda_g, umf_alpha]
 ]
 
 

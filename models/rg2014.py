@@ -17,18 +17,20 @@ from scipy.optimize import fsolve
 from tools.utils import validate_input
 
 # create symbols
-V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g, t_e, beta = sp.symbols("V0 R0 rho_l mu_l sigma_l rho_g mu_g lambda_g t_e beta")
-state = [V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g]
+V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g, alpha, t_e, beta = sp.symbols("V0 R0 rho_l mu_l sigma_l rho_g mu_g lambda_g alpha t_e beta")
+state = [V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g, alpha]
 
 # RG equations
 H_t = R0 * sp.sqrt(12) * t_e**(3/2) / sp.pi
 V_t = V0/2 * sp.sqrt(3/t_e)
 
-alpha = 60 * sp.pi / 180
+# lift forces: lubrication and suction
 kl = -6/sp.tan(alpha)**2 * (sp.ln(19.2 * lambda_g / H_t) - sp.ln(1 + 19.2 * lambda_g / H_t))
+ll = kl * mu_g * V_t
 ku = 0.3
+ls = ku * rho_g * H_t * V_t**2
 
-beta_expr = sp.sqrt((kl * mu_g * V_t + ku * rho_g * H_t * V_t**2) / (2 * sigma_l))
+beta_expr = sp.sqrt((ll + ls) / (2 * sigma_l))
 
 # Ejection time. Use high Oh limit for mu > 10cp = 10e-3 Pa*s (Riboux & Gordillo 2015)
 t_e_expr = sigma_l / (R0 * V0**2 * rho_l) + sp.sqrt(3) * mu_l / (2 * R0 * V0 * rho_l * sp.sqrt(t_e)) - 1.2 * t_e**(3/2)
