@@ -29,12 +29,12 @@ state = [V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g, alpha]
 #####
 # Constants according to Riboux and Gordillo (2014, 2015)
 c1 = sp.sqrt(3)/2
-c2 = 1.2**2
+c2 = sp.sqrt(1.2)
 K_u = 0.3
 
 # Define auxiliary functions
 f1 = (19.2 * sp.pi * lambda_g) / (sp.sqrt(12) * R0 * t_e**(3/2))
-f2 = c1 * mu_l + 3 * c2**2 * R0 * t_e**(3/2) * V0 * rho_l
+f2 = c1 * mu_l + 3 * c2**2 * R0 * t_e**2 * V0 * rho_l
 f3 = (c1 * V0 * mu_l + sp.sqrt(t_e) * sigma_l) / f2
 f4 = c1 * V0 * mu_l + 2 * sp.sqrt(t_e) * sigma_l
 f5 = sp.ln(f1) - sp.ln(1 + f1)
