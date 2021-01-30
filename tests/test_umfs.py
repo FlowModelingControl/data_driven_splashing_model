@@ -43,3 +43,27 @@ class DSTModelTestCase(BaseTest):
             ]),
             calc_umfs(self.x_matrix)
         )
+
+    def test_umfs_varying_alpha(self):
+        """
+        Compares UMFs calculated with this code to UMFs calculated in batch using Wolfram Mathematica.
+        Impact states are sampled at random using Latin Hypercube Sampling (LHS).
+        """
+        # load validation data from csv and ignore first column (ids) and first row (headers)
+        validation_data = np.genfromtxt(
+            'lhs_mathematica_validation.csv',
+            delimiter=",",
+            dtype=float,
+            skip_header=1
+        )[:, 1:]
+
+        # Split validation data into inputs (impact conditions) and expected outputs (UMFs)
+        validation_input = validation_data[:, 0:9]
+        validation_umfs = validation_data[:, 9:]
+
+        # Compare to Python computations
+        np.testing.assert_array_almost_equal(
+            calc_umfs(validation_input),
+            validation_umfs
+        )
+

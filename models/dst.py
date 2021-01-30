@@ -21,8 +21,8 @@ from models.rg2014 import calc_beta
 from tools.utils import validate_input
 
 # create symbols
-V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g, t_e, beta = sp.symbols("V0 R0 rho_l mu_l sigma_l rho_g mu_g lambda_g t_e beta")
-state = [V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g]
+V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g, alpha, t_e, beta = sp.symbols("V0 R0 rho_l mu_l sigma_l rho_g mu_g lambda_g alpha t_e beta")
+state = [V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g, alpha]
 
 # DST equation
 c0 = 0.1081
