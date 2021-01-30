@@ -21,34 +21,34 @@ from models.rg2014 import beta_expr, calc_t_e
 from tools.utils import validate_input
 
 # create symbols
-U0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g, t_e, beta, f1, f2, f3 = sp.symbols("U0 R0 rho_l mu_l sigma_l rho_g mu_g lambda_g t_e beta f1 f2 f3")
-state = [U0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g]
+V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g, t_e, beta, f1, f2, f3 = sp.symbols("V0 R0 rho_l mu_l sigma_l rho_g mu_g lambda_g t_e beta f1 f2 f3")
+state = [V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g]
 
 #####
 # Implement uncertainty magnification factors for RG splashing model (???)
 #####
 # Time derivative functions
 # update constants
-f1_expr = sp.sqrt(3)/7.2 * mu_l + R0 * t_e**2 * U0 * rho_l
-f2_expr = sp.sqrt(3)/3.6 * t_e * U0 * mu_l
+f1_expr = sp.sqrt(3)/7.2 * mu_l + R0 * t_e**2 * V0 * rho_l
+f2_expr = sp.sqrt(3)/3.6 * t_e * V0 * mu_l
 f3_expr = 2/3.6 * t_e**(3/2) * sigma_l
 
 # Common functions
-a1 = f1 * t_e * U0 * beta**2 * sigma_l * (R0 * t_e**(3/2) + 17.4125 * lambda_g)
-a2 = 3/8 * sp.sqrt(3) * R0 * t_e * U0 * mu_g
-a3 = R0 * sp.sqrt(t_e) * U0**2 * rho_g * (0.0620245 * R0 * t_e**(3/2) + 1.08 * lambda_g)
+a1 = f1 * t_e * V0 * beta**2 * sigma_l * (R0 * t_e**(3/2) + 17.4125 * lambda_g)
+a2 = 3/8 * sp.sqrt(3) * R0 * t_e * V0 * mu_g
+a3 = R0 * sp.sqrt(t_e) * V0**2 * rho_g * (0.0620245 * R0 * t_e**(3/2) + 1.08 * lambda_g)
 a4 = -1/4 * beta**2 * sigma_l * (R0 * t_e**(3/2) + 17.4125 * lambda_g)
 
-umf_U0 = (
+umf_V0 = (
     a2 * (-f2 - 2*f3) +
-    a3 * (f1 * t_e * U0 - f2 - 2*f3) -
-    a4 * (2*f1 * t_e * U0 + f2 + 2*f3)
+    a3 * (f1 * t_e * V0 - f2 - 2*f3) -
+    a4 * (2*f1 * t_e * V0 + f2 + 2*f3)
 ) / a1
 
 
 umf_R0 = (
-    a2 * (2/3 * f1 * t_e * U0 - f2 - f3) +
-    a3 * (f1 * t_e * U0 - f2 - f3) -
+    a2 * (2/3 * f1 * t_e * V0 - f2 - f3) +
+    a3 * (f1 * t_e * V0 - f2 - f3) -
     a4 * (f2 + f3)
 ) / a1
 
@@ -61,14 +61,14 @@ umf_mu_l = f2 / a1 * (
 umf_sigma_l = (
     a2 * f3 +
     a3 * f3 +
-    a4 * (2 * t_e * U0 * f1 + f3)
+    a4 * (2 * t_e * V0 * f1 + f3)
 ) / a1
 
-umf_rho_g = (0.0620245 * R0 * sp.sqrt(t_e) * U0**2 * rho_g) / (beta**2 * sigma_l)
+umf_rho_g = (0.0620245 * R0 * sp.sqrt(t_e) * V0**2 * rho_g) / (beta**2 * sigma_l)
 
 umf_mu_g = 0.5 - umf_rho_g
 
-umf_lambda_g = -(sp.sqrt(3) * R0 * t_e * U0 * mu_g) / (4 * beta**2 * sigma_l * (R0 * t_e**(3/2) + 17.4125 * lambda_g))
+umf_lambda_g = -(sp.sqrt(3) * R0 * t_e * V0 * mu_g) / (4 * beta**2 * sigma_l * (R0 * t_e**(3/2) + 17.4125 * lambda_g))
 
 # Substitute auxiliary functions f1, f2, f3, and RG's beta equation into UMF equations.
 # Convert all UMF equations into array of python usabale functions.
@@ -83,7 +83,7 @@ umf_funcs = [
         ]),
         "numpy"
     ) for umf in
-    [umf_U0, umf_R0, umf_rho_l, umf_mu_l, umf_sigma_l, umf_rho_g, umf_mu_g, umf_lambda_g ]
+    [umf_V0, umf_R0, umf_rho_l, umf_mu_l, umf_sigma_l, umf_rho_g, umf_mu_g, umf_lambda_g ]
 ]
 
 

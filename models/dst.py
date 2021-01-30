@@ -21,8 +21,8 @@ from models.rg2014 import calc_beta
 from tools.utils import validate_input
 
 # create symbols
-U0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g, t_e, beta = sp.symbols("U0 R0 rho_l mu_l sigma_l rho_g mu_g lambda_g t_e beta")
-state = [U0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g]
+V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g, t_e, beta = sp.symbols("V0 R0 rho_l mu_l sigma_l rho_g mu_g lambda_g t_e beta")
+state = [V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g]
 
 # DST equation
 c0 = 0.1081
@@ -31,7 +31,7 @@ c2 = 1.7455e-05
 c3 = -7.0763e-01
 c4 = 1.6841e-02
 
-beta_dst_expr = c0 + c1 * U0 + c2 / mu_l + c3 * sigma_l + c4 * rho_g
+beta_dst_expr = c0 + c1 * V0 + c2 / mu_l + c3 * sigma_l + c4 * rho_g
 
 # Transform equation into function usabale with python
 beta_dst = sp.lambdify(
