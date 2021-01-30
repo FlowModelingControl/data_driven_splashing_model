@@ -16,8 +16,8 @@ based on the splashing model proposed by Riboux & Gordillo (2014; 2015).
   the droplets ejected after splashing." Journal of Fluid Mechanics 772 (2015): 630-648.
 """
 import numpy as np
-from models.dst import dst_calc_threshold, dst_predict_splashing
-from models.rg2014 import calc_beta
+from rg_dst_umf import dst_calc_threshold, dst_predict_splashing
+from rg_dst_umf import calc_beta
 
 ####
 # Vector mode:
@@ -32,7 +32,8 @@ x1 = np.array([
     72e-3,      # sigma_l in N/m
     1.205,      # rho_g in kg/m^3
     1.8e-5,     # mu_g in Pa s
-    68e-9       # lambda_g in m
+    68e-9,      # lambda_g in m
+    np.pi/3,    # alpha in rad
 ])
 
 # Optional: Calculate beta and threshold value of DST model manually
@@ -55,7 +56,8 @@ x2 = np.array([
     72e-3,
     1.205,
     1.8e-5,
-    68e-9
+    68e-9,
+    np.pi/3,
 ])
 
 # Drop 3: Water (5 m/s, R=2mm) in Helium
@@ -67,7 +69,8 @@ x3 = np.array([
     72e-3,
     .22,
     2e-5,
-    173e-9
+    173e-9,
+    np.pi/3,
 ])
 
 # Bundle all three drops into matrix (numpy array)

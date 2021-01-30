@@ -1,7 +1,7 @@
 import numpy as np
 
 from tests.base_test import BaseTest
-from models.rg_umfs import calc_umfs
+from rg_dst_umf import calc_umfs
 
 
 class DSTModelTestCase(BaseTest):

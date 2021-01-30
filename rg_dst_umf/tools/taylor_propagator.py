@@ -1,9 +1,9 @@
 import numpy as np
 
-from tools.utils import validate_input
+from .utils import validate_input
 
-from models.rg_umfs import calc_umfs
-from models.rg2014 import calc_beta
+from ..models.rg_umfs import calc_umfs
+from ..models.rg2014 import calc_beta
 
 
 class TaylorPropagator:
@@ -12,17 +12,19 @@ class TaylorPropagator:
     based on the Taylor expansion method.
     """
     VALID_VARIABLES = (
-        "V0", "R0", "rho_l", "mu_l", "sigma_l", "rho_g", "mu_g", "lambda_g"
+        "V0", "R0", "rho_l", "mu_l", "sigma_l", "rho_g", "mu_g", "lambda_g", "alpha"
     )
 
-    # Assume a relative uncertainty of 1% for all gas and liquid parameters.
     DEFAULT_UNCERTAINTIES = {
+        # Assume a relative uncertainty of 1% for all gas and liquid parameters.
         "rho_l": lambda val: val * 0.01,
         "mu_l": lambda val: val * 0.01,
         "sigma_l": lambda val: val * 0.01,
         "rho_g": lambda val: val * 0.01,
         "mu_g": lambda val: val * 0.01,
         "lambda_g": lambda val: val * 0.01,
+        # Assume relative uncertainty of 6% for wedge angle alpha (Gordillo and Riboux, 2019)
+        "alpha": lambda val: val * 0.06,
     }
 
     def __init__(self, uncertainty_dict, update_defaults=False):

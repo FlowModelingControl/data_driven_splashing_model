@@ -1,7 +1,7 @@
 import numpy as np
 
 from tests.base_test import BaseTest
-from models.rg2014 import calc_beta, calc_t_e
+from rg_dst_umf import calc_beta, calc_t_e
 
 
 class RG2014TestCase(BaseTest):

@@ -14,7 +14,7 @@ import sympy as sp
 import numpy as np
 from scipy.optimize import fsolve
 
-from tools.utils import validate_input
+from ..tools.utils import validate_input
 
 # create symbols
 V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g, alpha, t_e, beta = sp.symbols("V0 R0 rho_l mu_l sigma_l rho_g mu_g lambda_g alpha t_e beta")

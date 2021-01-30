@@ -17,8 +17,8 @@ model (Riboux & Gordillo 2014; 2015) in Pierzyna et al. (2020).
 import sympy as sp
 import numpy as np
 
-from models.rg2014 import calc_t_e, ll, ls
-from tools.utils import validate_input
+from .rg2014 import calc_t_e, ll, ls
+from ..tools.utils import validate_input
 
 # create symbols
 V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g, alpha, t_e, beta = sp.symbols("V0 R0 rho_l mu_l sigma_l rho_g mu_g lambda_g alpha t_e beta")

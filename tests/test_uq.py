@@ -2,8 +2,8 @@ import unittest
 import numpy as np
 
 from tests.base_test import BaseTest
-from tools.taylor_propagator import TaylorPropagator
-from models.rg2014 import calc_beta
+from rg_dst_umf.tools.taylor_propagator import TaylorPropagator
+from rg_dst_umf import calc_beta
 
 
 class UQFunctionalTestCase(unittest.TestCase):

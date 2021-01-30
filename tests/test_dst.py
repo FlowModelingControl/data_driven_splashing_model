@@ -1,7 +1,7 @@
 import numpy as np
 
 from tests.base_test import BaseTest
-from models.dst import dst_calc_threshold, dst_predict_splashing
+from rg_dst_umf import dst_calc_threshold, dst_predict_splashing
 
 
 class DSTModelTestCase(BaseTest):

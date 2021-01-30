@@ -15,10 +15,9 @@ Riboux and Gordillo (2014; 2015).
 * Riboux, Guillaume, and José Manuel Gordillo. "The diameters and velocities of
   the droplets ejected after splashing." Journal of Fluid Mechanics 772 (2015): 630-648.
 """
-import numpy as np
 import sympy as sp
-from models.rg2014 import calc_beta
-from tools.utils import validate_input
+from .rg2014 import calc_beta
+from ..tools.utils import validate_input
 
 # create symbols
 V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g, alpha, t_e, beta = sp.symbols("V0 R0 rho_l mu_l sigma_l rho_g mu_g lambda_g alpha t_e beta")
