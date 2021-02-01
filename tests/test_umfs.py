@@ -51,7 +51,7 @@ class DSTModelTestCase(BaseTest):
         """
         # load validation data from csv and ignore first column (ids) and first row (headers)
         validation_data = np.genfromtxt(
-            'lhs_mathematica_validation.csv',
+            'tests/lhs_mathematica_validation.csv',
             delimiter=",",
             dtype=float,
             skip_header=1

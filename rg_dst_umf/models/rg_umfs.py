@@ -30,7 +30,6 @@ state = [V0, R0, rho_l, mu_l, sigma_l, rho_g, mu_g, lambda_g, alpha]
 # Constants according to Riboux and Gordillo (2014, 2015)
 c1 = sp.sqrt(3)/2
 c2 = sp.sqrt(1.2)
-K_u = 0.3
 
 # Define auxiliary functions
 f1 = (19.2 * sp.pi * lambda_g) / (sp.sqrt(12) * R0 * t_e**(3/2))
@@ -101,6 +100,20 @@ umf_funcs = [
 ]
 
 
+def vectorize_constant(result, length):
+    """
+    If sympy expression simplifies to a constant, only this constant is returned
+    regardless of dimensionality of input.
+    E.g. Input: (n x m) matrix
+         -> expected Output: vector length m
+         -> actual output: scalar constant
+    This workaround will convert the constant scalar into a vector for further processing
+    """
+    if isinstance(result, (int, float)):
+        return np.ones(length) * result
+    return result
+
+
 def calc_umfs(impact_matrix):
     """
     Calculate UMF factors for RG splashing model (Pierzyna et al. 2020)
@@ -118,11 +131,21 @@ def calc_umfs(impact_matrix):
     if is_matrix:
         # 2D matrix
         impact_matrix = np.c_[impact_matrix, t_e_result]
+
+        # Output has to be vectorized in case equations return only constant
+        umfs = np.array([
+            vectorize_constant(
+                umf_f(*impact_matrix.T), impact_matrix.shape[0]
+            )
+            for umf_f in umf_funcs
+        ]).T
     else:
         # 1D matrix, i.e. vector
         impact_matrix = np.r_[impact_matrix, t_e_result]
 
-    return np.array([
-        umf(*impact_matrix.T)
-        for umf in umf_funcs
-    ]).T
+        umfs = np.array([
+            umf_f(*impact_matrix.T)
+            for umf_f in umf_funcs
+        ]).T
+
+    return umfs
