@@ -55,7 +55,7 @@ class TaylorPropagator:
 
     def calc_beta_uncertainty(self, X, relative=False):
         """
-        Propagate uncertainties according to Eq. (2.2) shown in Pierzyna et al. (2020)
+        Propagate uncertainties according to Eq. (2.2) shown in Pierzyna et al. (2021)
         to obtain combined uncertainty of splashing factor beta for provided state X.
 
         :X:         Drop impact measurements as numpy.ndarray of shape (8, ) or (n, 8)

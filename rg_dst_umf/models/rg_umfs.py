@@ -2,12 +2,12 @@
 # Uncertainty magnification factors for RG splashing model
 
 Equations for uncertainty magnification factors (UMFs) derived for the RG splashing
-model (Riboux & Gordillo 2014; 2015) in Pierzyna et al. (2020).
+model (Riboux & Gordillo 2014; 2015) in Pierzyna et al. (2021).
 
 ## References
 * Pierzyna, Maximilian, David A. Burzynski, Stephan E. Bansmer, and Richard Semaan.
   "Data-driven splashing threshold model for drop impact on dry smooth surfaces."
-  Journal of Fluid Mechanics (2020, submitted)
+  International Journal of Multiphase Flow (2021, submitted)
 * Riboux, Guillaume, and José Manuel Gordillo. "Experiments of drops impacting
   a smooth solid surface: a model of the critical impact speed for drop splashing."
   Physical review letters 113.2 (2014): 024507.
@@ -102,10 +102,9 @@ umf_funcs = [
 
 def vectorize_constant(result, length):
     """
-    If sympy expression simplifies to a constant, only this constant is returned
-    regardless of dimensionality of input.
+    If sympy expression simplifies to a constant, only this constant is returned regardless of dimensionality of input.
     E.g. Input: (n x m) matrix
-         -> expected Output: vector length m
+         -> expected output: vector length m
          -> actual output: scalar constant
     This workaround will convert the constant scalar into a vector for further processing
     """
@@ -116,7 +115,7 @@ def vectorize_constant(result, length):
 
 def calc_umfs(impact_matrix):
     """
-    Calculate UMF factors for RG splashing model (Pierzyna et al. 2020)
+    Calculate UMF factors for RG splashing model (Pierzyna et al. 2021)
     either for single impact vector or for matrix of impact vectors.
 
     :impact_matrix: numpy.ndarry of shape (8, ) or (n, 8) with drop impact
