@@ -39,6 +39,6 @@ python -m unittests
 ```
 
 ## References
-* Pierzyna, Maximilian, David A. Burzynski, Stephan E. Bansmer, and Richard Semaan. "Data-driven splashing threshold model for drop impact on dry smooth surfaces." Physical Review Fluids (2021, in review)
+* Pierzyna, Maximilian, David A. Burzynski, Stephan E. Bansmer, and Richard Semaan. "Data-driven splashing threshold model for drop impact on dry smooth surfaces." Physics of Fluids (2021, in revision)
 * Riboux, Guillaume, and José Manuel Gordillo. "Experiments of drops impacting a smooth solid surface: a model of the critical impact speed for drop splashing." Physical review letters 113.2 (2014): 024507.
 * Riboux, Guillaume, and José Manuel Gordillo. "The diameters and velocities of the droplets ejected after splashing." Journal of Fluid Mechanics 772 (2015): 630-648.
