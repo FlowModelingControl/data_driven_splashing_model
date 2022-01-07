@@ -12,7 +12,7 @@ on the calculated splashing factor `beta` according to the RG theory.
 ## References
 * Pierzyna, Maximilian, David A. Burzynski, Stephan E. Bansmer, and Richard Semaan.
   "Data-driven splashing threshold model for drop impact on dry smooth surfaces."
-  Physics of Fluids (2021, in revision)
+  Physics of Fluids 33.12 (2021): 123317.
 * Riboux, Guillaume, and José Manuel Gordillo. "Experiments of drops impacting
   a smooth solid surface: a model of the critical impact speed for drop splashing."
   Physical review letters 113.2 (2014): 024507.

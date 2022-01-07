@@ -20,7 +20,7 @@ pip install -r requirements.txt
 ## Usage
 Please refer to `example_dst.py` and `example_uq.py` for detailed instructions on how to use the DST model and the uncertainty quantification method.
 
-In general, all functions expect a vector (`numpy.ndarray` of shape `(8, )`) or a list of vectors (`numpy.ndarray` of shape `(n, 8`)) which describe the full state of the drop impact on a dry smooth surface. The expected variables are 
+In general, all functions expect a vector (`numpy.ndarray` of shape `(9, )`) or a list of vectors (`numpy.ndarray` of shape `(n, 9`)) which describe the full state of the drop impact on a dry smooth surface. The expected variables are 
 * impact velocity `V0` in m/s,
 * drop **radius** `R0` in m,
 * liquid density `rho_l` in kg/m^3,
@@ -28,7 +28,10 @@ In general, all functions expect a vector (`numpy.ndarray` of shape `(8, )`) or 
 * liquid surface tension `sigma_l` in N/m,
 * gas density `rho_g` in kg/m^3,
 * gas viscosity `mu_g` in Pa s,
-* and gas mean free path `lambda_g` in m.
+* gas mean free path `lambda_g` in m,
+* and wedge angle `alpha` measured between lifted liquid lamella and solid substrate.
+
+Note, that the wedge angle is typically assumed constant at 60 degrees. For a more detailed discussion, please refer to Pierzyna et al. (2021).
 
 ## Testing
 Tests are provided in the `tests` folder to ensure that all mathematical models are implemented correctly. Reference values were caluculated with great care in Mathematica based on equations provided by Pierzyna et al. (2021) and Riboux & Gordillo (2014; 2015).
